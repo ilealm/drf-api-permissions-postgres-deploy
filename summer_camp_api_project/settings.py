@@ -95,28 +95,28 @@ WSGI_APPLICATION = 'summer_camp_api_project.wsgi.application'
 #     postgres_data:
 
 # Local DB config
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'ileal',
-        'PASSWORD': 'postgres_super_$ecure! :)',
-        'HOST': 'localhost',
-        'PORT': 5432,
-    }
-}
-
-# # Docker config
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
 #         'NAME': 'postgres',
-#         'USER': 'postgres',
-#         'PASSWORD': 'postgres',
-#         'HOST': 'db',
+#         'USER': 'ileal',
+#         'PASSWORD': 'postgres_super_$ecure! :)',
+#         'HOST': 'localhost',
 #         'PORT': 5432,
 #     }
 # }
+
+# # Docker config
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'db',
+        'PORT': 5432,
+    }
+}
 
 
 # Password validation
