@@ -1,5 +1,4 @@
 """summer_camp_api_project URL Configuration
-
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.0/topics/http/urls/
 Examples:
@@ -14,8 +13,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
+from rest_framework_simplejwt import views as jws_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/v1/courses/', include('courses.urls')),
+    path('api-auth/', include('rest_framework.urls')),
+	path('api/token/', jws_views.TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path('api/token/refresh/', jws_views.TokenRefreshView.as_view() , name="token_refresh"),
+
 ]
