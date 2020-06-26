@@ -8,6 +8,16 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import environ
+
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
+
+# read .env file
+environ.Env.read_env()
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -17,12 +27,18 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'y!(4i(&&s1+0&qs=rxrf2nsru^m)w*#byk91dg0&(e7h+i&%m&'
+# SECRET_KEY = 'y!(4i(&&s1+0&qs=rxrf2nsru^m)w*#byk91dg0&(e7h+i&%m&'
+SECRET_KEY = env.str('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = env.bool('DEBUG')
 
-ALLOWED_HOSTS = ['0.0.0.0','localhost','127.0.0.1']
+ALLOWED_HOSTS = tuple(env.list('ALLOWED_HOSTS'))
+# ALLOWED_HOSTS = ['0.0.0.0','localhost','127.0.0.1']
+
+
+
 
 
 # Application definition
@@ -87,12 +103,6 @@ WSGI_APPLICATION = 'summer_camp_api_project.wsgi.application'
 #     }
 # }
 
-# for guinicorn
-#     volumes:
-#         - postgres_data:/var/lib/postgresql/data/
-
-# volumes:
-#     postgres_data:
 
 # Local DB config
 # DATABASES = {
@@ -106,15 +116,27 @@ WSGI_APPLICATION = 'summer_camp_api_project.wsgi.application'
 #     }
 # }
 
-# # Docker config
+# Docker config
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'postgres',
+#         'USER': 'postgres',
+#         'PASSWORD': 'postgres',
+#         'HOST': 'db',
+#         'PORT': 5432,
+#     }
+# }
+
+# production
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'db',
-        'PORT': 5432,
+        'NAME': env('DATABASE_NAME'),
+        'USER': env('DATABASE_USER'),
+        'PASSWORD':  env('DATABASE_PASSWORD'),
+        'HOST':  env('DATABASE_HOST'),
+        'PORT':  env('DATABASE_PORT')
     }
 }
 
@@ -173,3 +195,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
     ],
 }
+
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:3000",
+]
