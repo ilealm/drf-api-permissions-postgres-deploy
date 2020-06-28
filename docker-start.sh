@@ -4,6 +4,7 @@ python manage.py migrate
 
 echo "Collect static files" > /dev/console
 python manage.py collectstatic
+cp -R staticfiles/* static
 
 # Start server
 echo "Starting server"
