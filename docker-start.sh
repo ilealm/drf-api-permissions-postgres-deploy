@@ -3,6 +3,7 @@ echo "Apply database migrations" > /dev/console
 python manage.py migrate
 
 echo "Collect static files" > /dev/console
+rm -rf staticfiles
 python manage.py collectstatic
 cp -R staticfiles/* static
 
